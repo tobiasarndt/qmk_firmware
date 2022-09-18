@@ -64,16 +64,15 @@ void raw_hid_send_screen_index(void) {
     send_data[0] = screen_show_index + 1; // Add one so that we can distinguish it from a null byte
     raw_hid_send(send_data, sizeof(send_data));
   }
-  screen_data_index = 0;
-}
-
-void increase_screen_num (void) {
-  screen_show_index = (screen_show_index + 1 + screen_max_count) % screen_max_count;
-  raw_hid_send_screen_index();
 }
 
 void decrease_screen_num (void) {
-  screen_show_index = (screen_show_index - 1 + screen_max_count) % screen_max_count;
+  screen_show_index = (screen_show_index - 1) % screen_max_count;
+  raw_hid_send_screen_index();
+}
+
+void increase_screen_num (void) {
+  screen_show_index = (screen_show_index + 1) % screen_max_count;
   raw_hid_send_screen_index();
 }
 
