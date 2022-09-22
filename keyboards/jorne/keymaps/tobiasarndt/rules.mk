@@ -8,9 +8,9 @@ BOOTLOADER = caterina
 #   change yes to no to disable
 #
 BOOTMAGIC_ENABLE = no      # Enable Bootmagic Lite
-MOUSEKEY_ENABLE = yes      # Mouse keys
+MOUSEKEY_ENABLE = no      # Mouse keys
 EXTRAKEY_ENABLE = yes      # Audio control and System control
-CONSOLE_ENABLE = no        # Console for debug
+CONSOLE_ENABLE = yes        # Console for debug
 COMMAND_ENABLE = no        # Commands for debug and configuration
 NKRO_ENABLE = no           # Enable N-Key Rollover
 BACKLIGHT_ENABLE = no      # Enable keyboard backlight functionality
@@ -19,6 +19,7 @@ SPLIT_KEYBOARD = yes       # Split common
 LTO_ENABLE     = yes
 OLED_ENABLE = yes
 OLED_DRIVER = SSD1306
+RGBLIGHT_ENABLE = no
 RAW_ENABLE          = yes   # Enable RAW HID communication to PC
 LINK_TIME_OPTIMIZATION_ENABLE = yes
 
@@ -31,6 +32,6 @@ OPT_DEFS += -DGERMAN_ENABLE             \
 
 
 
-SRC +=  spacebarracecar.c		\
+SRC +=  spacebarracecar_tobi.c		\
         hid_display.c 	\
 #        ./lib/oled_driver_custom.c  \

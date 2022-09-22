@@ -1,4 +1,4 @@
-#include "spacebarracecar.h"
+#include "spacebarracecar_tobi.h"
 #include "hid_display.h"
 
 #ifdef GERMAN_ENABLE
@@ -135,10 +135,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case CU_LSFT:
     if(record->event.pressed) {
       lshiftp = true;
+      lshift_timer = timer_read();
       unregister_code(KC_LSFT);
       register_code(KC_LSFT);
       lshift = true;
     } else {
+      if (timer_elapsed(lshift_timer) < TAPPING_TERM && lshiftp && !game) {
+        unregister_code(KC_LSFT);
+        register_code(KC_ENT);
+        unregister_code(KC_ENT);
+      }
       unreg_prev();
       if (!rshift)
         unregister_code(KC_LSFT);
@@ -148,20 +154,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case CU_RSFT:
     if(record->event.pressed) {
       rshiftp = true;
+      rshift_timer = timer_read();
       unregister_code(KC_LSFT);
       register_code(KC_LSFT);
       rshift = true;
     } else {
+      if (timer_elapsed(rshift_timer) < TAPPING_TERM && rshiftp && !game) {
+        unregister_code(KC_RSFT);
+        register_code(KC_SPC);
+        unregister_code(KC_SPC);
+      }
       unreg_prev();
       if (!lshift)
         unregister_code(KC_LSFT);
       rshift = false;
-    }
-    return false;
-  case CU_ESCT:
-    if(record->event.pressed) {
-      timer_timeout();
-      esct = !esct;
     }
     return false;
   case CU_AE:

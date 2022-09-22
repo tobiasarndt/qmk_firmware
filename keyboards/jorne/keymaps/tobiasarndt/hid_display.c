@@ -2,6 +2,7 @@
 #include <string.h>
 #include "hid_display.h"
 #include "jorne.h"
+#include "print.h"
 
 // Add headers for raw hid communication
 // #include <split_scomm.h>
@@ -145,6 +146,10 @@ void raw_hid_receive8(uint8_t *data, uint8_t length) {
 }
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
+  for(int i = 0; i < length; i++) {
+    uprintf("%d ", data[i]);
+  }
+  uprint("\n");
   // PC connected, so set the flag to show a message on the master display
   hid_connected = true;
   uprintf("\nScreen Index Start, length, bit 0 : %d, %d, %d\n", screen_data_index, length, data[0]);

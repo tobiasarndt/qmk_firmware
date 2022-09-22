@@ -1,7 +1,7 @@
 // Copyright 2021 Joric (@joric)
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include QMK_KEYBOARD_H
-#include "spacebarracecar.h"
+#include "spacebarracecar_tobi.h"
 #include "jorne.h"
 #include "hid_display.h"
 
@@ -29,16 +29,12 @@ enum custom_keycodes {
 //#define BSL_RAL MT(MOD_RALT, KC_BSLS)
 #define BSP_LSH MT(MOD_LSFT, KC_BSPC)
 #define SPC_RSH MT(MOD_RSFT, KC_SPC)
-#define TAB_CUS MT(CU_LSFT, KC_TAB)
-#define ENT_CUS MT(CU_RSFT, KC_ENT)
-#define BSP_CUS MT(CU_RSFT, KC_BSPC)
 #define DEL_NUM LT(_ROT, KC_DEL)
 #define TAB_NUM LT(_ROT, KC_TAB)
 #define ENT_LWR LT(_LOWER, KC_ENT)
 #define ESC_UML LT(_BLAU, KC_ESC)
 
-#define SPC_UML LT(_BLAU, KC_SPC)
-
+#define BSP_UML LT(_BLAU, KC_BSPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -46,12 +42,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LGUI, DE_CIRC, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    CU_SLSH, RGUI_T(KC_RBRC),
            KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,         KC_H,    KC_J,    KC_K,    KC_L,    CU_LBR,  CU_RBR,
            KC_LALT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,         KC_N,    KC_M,    DE_COMM, DE_DOT,  DE_MINS, CU_EQL,
-                                      TAB_NUM, SPC_UML, ENT_CUS,      DEL_NUM, BSP_CUS, ESC_UML
+                                      TAB_NUM, BSP_UML, CU_LSFT,      DEL_NUM, CU_RSFT, ESC_UML
 ),
 
 [_BLAU] = LAYOUT(
   _______, KC_ESC,  DE_AT,   CU_QUOT, DE_ACUT, _______, _______,      _______, DE_UDIA, _______, DE_ODIA, _______, DE_BSLS,  F12_RGU,
-           PLS_LCT, DE_ADIA, DE_SS,    _______, KC_LEFT, KC_DOWN,      KC_UP,   KC_RGHT, _______, _______, DE_LCBR, DE_RCBR,
+           PLS_LCT, DE_ADIA, DE_SS,   _______, KC_LEFT, KC_DOWN,      KC_UP,   KC_RGHT, _______, _______, DE_LCBR, DE_RCBR,
            EQL_LAL, _______, _______, KC_MPLY, KC_MPRV, KC_VOLD,      KC_VOLU, KC_MNXT, DE_LABK, DE_RABK, KC_PSLS, KC_PAST,
                                       _______, _______, _______,      _______, _______, _______
 ),
