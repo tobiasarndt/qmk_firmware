@@ -47,15 +47,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_BLAU] = LAYOUT(
   _______, KC_ESC,  DE_AT,   CU_QUOT, DE_ACUT, _______, _______,      _______, DE_UDIA, _______, DE_ODIA, _______, DE_BSLS,  F12_RGU,
-           PLS_LCT, DE_ADIA, DE_SS,   _______, KC_LEFT, KC_DOWN,      KC_UP,   KC_RGHT, _______, _______, DE_LCBR, DE_RCBR,
+           PLS_LCT, DE_ADIA, DE_SS,   _______, KC_LEFT, KC_UP,        KC_DOWN, KC_RGHT, _______, _______, DE_LCBR, DE_RCBR,
            EQL_LAL, _______, _______, KC_MPLY, KC_MPRV, KC_VOLD,      KC_VOLU, KC_MNXT, DE_LABK, DE_RABK, KC_PSLS, KC_PAST,
                                       _______, _______, _______,      _______, _______, _______
 ),
 
 [_ROT] = LAYOUT(
   _______, KC_NLCK, KC_1,    KC_2,    CU_3,    KC_4,    KC_5,         KC_6,    CU_7,    CU_8,    CU_9,    CU_0,    _______, KC_CAPS, 
-           EQL_LCT, _______, _______, _______, KC_HOME, KC_PGDN,      KC_PGUP, KC_END,  _______, _______, KC_INS,  APP_RCT,
-           _______, _______, _______, KC_COPY, KC_INS,  DEC_SCR,      INC_SCR, _______, _______, _______, _______, KC_PAUS, 
+           EQL_LCT, _______, _______, _______, KC_HOME, KC_PGUP,      KC_PGDN, KC_END,  _______, _______, KC_INS,  APP_RCT,
+           _______, _______, _______, KC_COPY, KC_INS,  DEC_SCR,      INC_SCR, _______, _______, _______, _______, CU_HASH, 
                                       _______, _______, _______,      _______, _______, _______
 ),
 
@@ -74,7 +74,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
  #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    if (is_keyboard_master()) {
+    if (is_keyboard_left()) {
         return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
     }
     return rotation;
