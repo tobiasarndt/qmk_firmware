@@ -1,4 +1,4 @@
-#include "spacebarracecar.h"
+#include "spacebarracecar_tobi.h"
 #include "hid_display.h"
 
 #ifdef GERMAN_ENABLE
@@ -135,10 +135,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case CU_LSFT:
     if(record->event.pressed) {
       lshiftp = true;
+      lshift_timer = timer_read();
       unregister_code(KC_LSFT);
       register_code(KC_LSFT);
       lshift = true;
     } else {
+      if (timer_elapsed(lshift_timer) < TAPPING_TERM && lshiftp && !game) {
+        unregister_code(KC_LSFT);
+        register_code(KC_ENT);
+        unregister_code(KC_ENT);
+      }
       unreg_prev();
       if (!rshift)
         unregister_code(KC_LSFT);
@@ -148,93 +154,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case CU_RSFT:
     if(record->event.pressed) {
       rshiftp = true;
+      rshift_timer = timer_read();
       unregister_code(KC_LSFT);
       register_code(KC_LSFT);
       rshift = true;
     } else {
+      if (timer_elapsed(rshift_timer) < TAPPING_TERM && rshiftp && !game) {
+        unregister_code(KC_RSFT);
+        register_code(KC_SPC);
+        unregister_code(KC_SPC);
+      }
       unreg_prev();
       if (!lshift)
         unregister_code(KC_LSFT);
       rshift = false;
-    }
-    return false;
-  case CU_ESCT:
-    if(record->event.pressed) {
-      timer_timeout();
-      esct = !esct;
-    }
-    return false;
-  case CU_AE:
-    UML(DE_ADIA)
-  case CU_OE:
-    UML(DE_ODIA)
-  case CU_UE:
-    UML(DE_UDIA)
-  case CU_SS:
-    if(record->event.pressed) {
-      timer_timeout();
-      unregister_code(KC_LSFT);
-      register_code(DE_SS);
-      unregister_code(DE_SS);
-      if (lshift || rshift)
-        register_code(KC_LSFT);
-      layer_off(_DEADKEY);
-    }
-    return false;
-  case CU_DDQ:
-    if(record->event.pressed) {
-      timer_timeout();
-      register_code(KC_LSFT);
-      register_code(KC_2);
-      unregister_code(KC_2);
-      if (!lshift && !rshift)
-        unregister_code(KC_LSFT);
-      layer_off(_DEADKEY);
-    }
-    return false;
-  case CU_ED:
-    if(record->event.pressed) {
-      timer_timeout();
-      layer_off(_DEADKEY);
-    }
-    return false;
-  case CU_GRV:
-    if(record->event.pressed) {
-      timer_timeout();
-      if (lshift || rshift){
-        unregister_code(KC_LSFT);
-        register_code(KC_ALGR);
-        unregister_code(DE_PLUS);
-        register_code(DE_PLUS);
-        unregister_code(DE_PLUS);
-        unregister_code(KC_ALGR);
-        register_code(KC_LSFT);
-      } else {
-        register_code(KC_LSFT);
-        unregister_code(DE_ACUT);
-        register_code(DE_ACUT);
-        unregister_code(DE_ACUT);
-        unregister_code(KC_LSFT);
-        if (!esct) {
-          register_code(KC_SPC);
-          unregister_code(KC_SPC);
-        }
-      }
-    }
-    return false;
-  case CU_CIRC:
-    if(record->event.pressed) {
-      timer_timeout();
-      unregister_code(KC_LSFT);
-      unregister_code(DE_CIRC);
-      register_code(DE_CIRC);
-      unregister_code(DE_CIRC);
-      if (!esct) {
-          register_code(KC_SPC);
-          unregister_code(KC_SPC);
-      }
-      if (lshift || rshift)
-        register_code(KC_LSFT);
     }
     return false;
   case CU_6:
@@ -257,42 +190,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(DE_6);
     }
     return false;
-  case CU_COMM:
-    SHIFT_NO(DE_COMM, DE_LABK)
-  case CU_DOT:
-    SHIFT_NORM(DE_DOT, DE_LABK)
+  // case CU_COMM:
+  //   SHIFT_NO(DE_COMM, DE_LABK)
   case CU_SLSH:
-    SHIFT_ALL(DE_7, DE_SS)
-  case CU_SCLN:
-    SHIFT_ALL(DE_COMM, DE_DOT)
+    SHIFT_NO(DE_SLSH, DE_QUES)
   case CU_3:
     SHIFT_NO(DE_3, DE_HASH)
   case CU_7:
-    SHIFT_NORM(DE_7, DE_6)
+    SHIFT_NO(DE_7, DE_AMPR)
   case CU_8:
-    SHIFT_NORM(DE_8, DE_PLUS)
+    SHIFT_NO(DE_8, DE_ASTR)
   case CU_9:
-    SHIFT_NORM(DE_9, DE_8)
+    SHIFT_NO(DE_9, DE_LPRN)
   case CU_0:
-    SHIFT_NORM(DE_0, DE_9)
+    SHIFT_NO(DE_0, DE_RPRN)
   case CU_EQL:
-    SHIFT_SWITCH(DE_0, DE_PLUS)
+    SHIFT_NO(DE_EQL, DE_PLUS)
   case CU_LBR:
-    SHIFT_P_ALTGR(DE_8, DE_8)
+    SHIFT_NO(DE_LPRN, DE_LBRC)
   case CU_RBR:
-    SHIFT_P_ALTGR(DE_9, DE_9)
-  case CU_LBRC:
-    SHIFT_ALGR(DE_8, DE_7)
-  case CU_RBRC:
-    SHIFT_ALGR(DE_9, DE_0)
-  case CU_BSLS:
-    SHIFT_ALGR(DE_SS, DE_LABK)
-  case CU_Z:
-    CTRL(DE_Z, KC_Z)
-  case CU_Y:
-    CTRL(DE_Y, KC_Y)
+    SHIFT_NO(DE_RPRN, DE_RBRC)
   case CU_QUOT:
-    SHIFT_ALL(DE_HASH,DE_2)
+    SHIFT_NO(DE_QUOT, DE_DQUO)
+  case CU_HASH:
+    SHIFT_NO(DE_HASH, DE_TILD)
   case KC_LCTL:
   case KC_RCTL:
     if(!record->event.pressed) {
