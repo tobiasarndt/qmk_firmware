@@ -20,13 +20,13 @@ enum userspace_custom_keycodes {
   #ifdef GERMAN_ENABLE
   CU_LSFT,                  // LSFT | (
   CU_RSFT,                  // LSFT | )
-  CU_COMM,                  // , | <
-  CU_DOT,                   // . | >
+  //CU_COMM,                  // , | <
+  //CU_DOT,                   // . | >
   CU_SLSH,                  // / | ?
-  CU_SCLN,                  // ; | :
-  CU_QUOT,                  // ' | Enable deadkey layer
-  CU_GRV,                   // ` | ~
-  CU_CIRC,                  // ^
+  //CU_SCLN,                  // ; | :
+  CU_QUOT,                  // ' | "
+  //CU_GRV,                   // ` | ~
+  //CU_CIRC,                  // ^
   CU_3,                     // 3 | #
   CU_6,                     // 6 | ^
   CU_7,                     // 7 | &
@@ -34,21 +34,22 @@ enum userspace_custom_keycodes {
   CU_9,                     // 9 | (
   CU_0,                     // 0 | )
   CU_EQL,                   // = | +
-  CU_LBRC,                  // [ | {
-  CU_RBRC,                  // ] | }
-  CU_LBR,                   // [ | {
-  CU_RBR,                   // ] | }
+  // CU_LBRC,                  // [ | {
+  // CU_RBRC,                  // ] | }
+  CU_LBR,                   // ( | [
+  CU_RBR,                   // ) | ]
   CU_BSLS,                  // \ | |
-  CU_Z,                     // Z | Y in conjunction with ctrl
-  CU_Y,                     // Y | Z in conjunction wiht ctrl
-  CU_ESCT,                  // Toggle escape of grv and circ on/off
-  // Deadkey Layer
-  CU_AE,                    // Ä
-  CU_OE,                    // Ö
-  CU_UE,                    // Ü
-  CU_SS,                    // ß
-  CU_DDQ,                   // "
-  CU_ED,                    // Escape deadkey layer
+  // CU_Z,                     // Z | Y in conjunction with ctrl
+  // CU_Y,                     // Y | Z in conjunction wiht ctrl
+  // CU_ESCT,                  // Toggle escape of grv and circ on/off
+  // // Deadkey Layer
+  // CU_AE,                    // Ä
+  // CU_OE,                    // Ö
+  // CU_UE,                    // Ü
+  // CU_SS,                    // ß
+  // CU_DDQ,                   // "
+  // CU_ED,                    // Escape deadkey layer
+  CU_HASH,
   #endif
 
   #ifdef RGBLIGHT_ENABLE
@@ -105,145 +106,28 @@ Templates for Keys, with custom shifted and non shifted Characters
 */
 
 // Normal shift status
-#define SHIFT_NORM(kc1, kc2) \
-if (record->event.pressed) { \
-  timer_timeout(); \
-  if (lshift || rshift) { \
-    register_code(KC_LSFT); \
-    unregister_code(kc2); \
-    register_code(kc2); \
-    add_to_prev(kc2); \
-  } else { \
-    unregister_code(KC_LSFT); \
-    unregister_code(kc1); \
-    register_code(kc1); \
-  } \
-} else { \
-  unregister_code(kc1); \
-  unregister_code(kc2); \
-} \
-return false;
-
-// Inverted shift status
-#define SHIFT_SWITCH(kc1, kc2) \
-if (record->event.pressed) { \
-  timer_timeout(); \
-  if (lshift || rshift) { \
-    unregister_code(KC_LSFT); \
-    unregister_code(kc2); \
-    register_code(kc2); \
-    add_to_prev(kc2); \
-  } else { \
-    register_code(KC_LSFT); \
-    unregister_code(kc1); \
-    register_code(kc1); \
-    add_to_prev(kc1); \
-  } \
-} else { \
-  unregister_code(kc1); \
-  unregister_code(kc2); \
-  unreg_prev(); \
-  if (lshift || rshift) \
-    register_code(KC_LSFT); \
-  else \
-    unregister_code(KC_LSFT); \
-} \
-return false;
-
-// Always shifted
-#define SHIFT_ALL(kc1, kc2) \
-if (record->event.pressed) { \
-  timer_timeout(); \
-  register_code(KC_LSFT); \
-  if (lshift || rshift) { \
-    unregister_code(kc2); \
-    register_code(kc2); \
-    add_to_prev(kc2); \
-  } else { \
-    unregister_code(kc1); \
-    register_code(kc1); \
-    add_to_prev(kc1); \
-  } \
-} else { \
-  unregister_code(kc1); \
-  unregister_code(kc2); \
-  unreg_prev(); \
-  if (lshift || rshift) \
-    register_code(KC_LSFT); \
-  else \
-    unregister_code(KC_LSFT); \
-} \
-return false;
 
 // Never shifted
 #define SHIFT_NO(kc1, kc2) \
 if (record->event.pressed) { \
   timer_timeout(); \
-  unregister_code(KC_LSFT); \
+  unregister_code16(KC_LSFT); \
   if (lshift || rshift) { \
-    unregister_code(kc2); \
-    register_code(kc2); \
+    unregister_code16(kc2); \
+    register_code16(kc2); \
     add_to_prev(kc2); \
   } else { \
-    unregister_code(kc1); \
-    register_code(kc1); \
+    unregister_code16(kc1); \
+    register_code16(kc1); \
   } \
 } else { \
-  unregister_code(kc1); \
-  unregister_code(kc2); \
+  unregister_code16(kc1); \
+  unregister_code16(kc2); \
   unreg_prev(); \
   if (lshift || rshift) \
-    register_code(KC_LSFT); \
+    register_code16(KC_LSFT); \
   else \
-    unregister_code(KC_LSFT); \
-} \
-return false;
-
-// Always AltGr
-#define SHIFT_ALGR(kc1, kc2) \
-if (record->event.pressed) { \
-  timer_timeout(); \
-  unregister_code(KC_LSFT); \
-  register_code(KC_ALGR); \
-  if (lshift || rshift) { \
-    unregister_code(kc2); \
-    register_code(kc2); \
-    unregister_code(kc2); \
-    register_code(KC_LSFT); \
-  } else { \
-    unregister_code(kc1); \
-    register_code(kc1); \
-    unregister_code(kc1); \
-  } \
-  unregister_code(KC_ALGR); \
-} \
-return false;
-
-// Shift or ALtGr
-#define SHIFT_P_ALTGR(kc1, kc2) \
-if (record->event.pressed) { \
-  timer_timeout(); \
-  if (lshift || rshift) { \
-    unregister_code(KC_LSFT); \
-    register_code(KC_RALT);  \
-    unregister_code(kc2); \
-    register_code(kc2); \
-    add_to_prev(kc2); \
-    unregister_code(KC_RALT); \
-  } else { \
-    register_code(KC_LSFT); \
-    unregister_code(kc1); \
-    register_code(kc1); \
-    add_to_prev(kc1); \
-  } \
-} else { \
-  unregister_code(kc1); \
-  unregister_code(kc2); \
-  unreg_prev(); \
-  if (lshift || rshift) \
-    register_code(KC_LSFT); \
-  else \
-    unregister_code(KC_LSFT); \
+    unregister_code16(KC_LSFT); \
 } \
 return false;
 
