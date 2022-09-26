@@ -214,6 +214,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     SHIFT_NO(DE_QUOT, DE_DQUO)
   case CU_HASH:
     SHIFT_NO(DE_HASH, DE_TILD)
+  case INC_SCR: 
+    if(record->event.pressed) {
+      uprintf("INC_SCR: ");
+      increase_screen_num();
+    }
+    return false;
+  case DEC_SCR: 
+    if(record->event.pressed) {
+      uprintf("DEC_SCR");
+      decrease_screen_num();
+    }
+    return false;
   case KC_LCTL:
   case KC_RCTL:
     if(!record->event.pressed) {
@@ -222,9 +234,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(KC_Y);
     }
     return true;
-  
-  case INC_SCR: if(record->event.pressed) {increase_screen_num();}
-  case DEC_SCR: if(record->event.pressed) {decrease_screen_num();}
   #endif
 
   default:

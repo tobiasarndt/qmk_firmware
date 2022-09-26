@@ -68,11 +68,17 @@ void raw_hid_send_screen_index(void) {
 }
 
 void decrease_screen_num (void) {
-  screen_show_index = (screen_show_index - 1) % screen_max_count;
+  uprintf("screen_ show_ index mod: %d, screen_max_count: %d \n", screen_show_index % screen_max_count, screen_max_count);
+  if(screen_show_index == 0) {
+    screen_show_index = screen_max_count - 1;
+  } else {
+    screen_show_index = (screen_show_index - 1) % screen_max_count;
+  }
   raw_hid_send_screen_index();
 }
 
 void increase_screen_num (void) {
+  uprintf("screen_show_index: %d, screen_ show_ index mod: %d, screen_max_count: %d \n",screen_show_index,  screen_show_index % screen_max_count, screen_max_count);
   screen_show_index = (screen_show_index + 1) % screen_max_count;
   raw_hid_send_screen_index();
 }
@@ -150,9 +156,10 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
     uprintf("%d ", data[i]);
   }
   uprint("\n");
+  uprintf("%d", screen_max_count);
   // PC connected, so set the flag to show a message on the master display
   hid_connected = true;
-  uprintf("\nScreen Index Start, length, bit 0 : %d, %d, %d\n", screen_data_index, length, data[0]);
+  //uprintf("\nScreen Index Start, length, bit 0 : %d, %d, %d\n", screen_data_index, length, data[0]);
 
 
   // Initial connections use '1' in the first byte to indicate this
@@ -177,10 +184,10 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
     for (int i = 0; i < 14; i++) {
       screen_data_buffer[screen_data_index * 14 + i] = 
       ((uint16_t)((data[2*i] -2 ) << 8)) + ((uint16_t)(data[2*i+1]));
-      uprintf("%d, %d\t,", i, ((uint16_t)((data[2*i]) - 2) << 8) + ((uint16_t)(data[2*i+1])));
+      //uprintf("%d, %d\t,", i, ((uint16_t)((data[2*i]) - 2) << 8) + ((uint16_t)(data[2*i+1])));
     }
     screen_data_index++;
-    uprintf("\nScreen Index, size: %d, %d\n", screen_data_index, sizeof(screen_data_buffer));
+    //uprintf("\nScreen Index, size: %d, %d\n", screen_data_index, sizeof(screen_data_buffer));
 
     // Once we reach 4 lines, we have a full screen
     if (screen_data_index == 6) {

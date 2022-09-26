@@ -1,7 +1,7 @@
 #pragma once
 
 #include "quantum.h"
-#include "keymap_german_mac_iso.h"
+#include "keymap_german.h"
 
 enum userspace_layers {
   _DEADKEY = 14,            // Change if more than 16 layers are required
@@ -16,6 +16,7 @@ enum userspace_custom_keycodes {
   
   INC_SCR,                  // for hid-display
   DEC_SCR,                  // for hid-display
+  TEST,
 
   #ifdef GERMAN_ENABLE
   CU_LSFT,                  // LSFT | (
