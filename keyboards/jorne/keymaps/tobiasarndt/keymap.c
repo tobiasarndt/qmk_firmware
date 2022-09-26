@@ -7,9 +7,10 @@
 
 enum layers {
     _QWERTY = 0,
+    _COLEMAK = 1,
     _BLAU,
     _ROT,
-    _ADJUST,
+    _ADJUST
 };
 
 
@@ -35,6 +36,7 @@ enum custom_keycodes {
 #define ESC_UML LT(_BLAU, KC_ESC)
 
 #define BSP_UML LT(_BLAU, KC_BSPC)
+#define COLEMAK TG(_COLEMAK)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -42,6 +44,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LGUI, DE_CIRC, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    CU_SLSH, RGUI_T(KC_RBRC),
            KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,         KC_H,    KC_J,    KC_K,    KC_L,    CU_LBR,  CU_RBR,
            KC_LALT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,         KC_N,    KC_M,    DE_COMM, DE_DOT,  DE_MINS, CU_EQL,
+                                      TAB_NUM, BSP_UML, CU_LSFT,      DEL_NUM, CU_RSFT, ESC_UML
+),
+
+[_COLEMAK] = LAYOUT(
+  KC_LGUI, DE_CIRC, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,         KC_J,    KC_L,    KC_U,    KC_Y,    CU_LBR,  CU_RBR,  RGUI_T(KC_RBRC),
+           KC_LCTL, KC_A,    KC_S,    KC_R,    KC_T,    KC_G,         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,  CU_SLSH,
+           KC_LALT, KC_Z,    KC_X,    KC_D,    KC_V,    KC_B,         KC_K,    KC_H,    DE_COMM, DE_DOT,  DE_MINS, CU_EQL,
                                       TAB_NUM, BSP_UML, CU_LSFT,      DEL_NUM, CU_RSFT, ESC_UML
 ),
 
@@ -60,16 +69,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_ADJUST] = LAYOUT(
-  QK_BOOT,   RGBRST,  KC_ASUP, KC_ASTG, KC_ASDN, _______, _______,      _______, _______, KC_ASDN, KC_ASTG, KC_ASUP, RGBRST,  QK_BOOT,
+  QK_BOOT, RGBRST,  KC_ASUP, KC_ASTG, KC_ASDN, _______, COLEMAK,      _______, _______, KC_ASDN, KC_ASTG, KC_ASUP, RGBRST,  QK_BOOT,
            RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, _______, _______,      _______, _______, RGB_VAI, RGB_SAI, RGB_HUI, RGB_TOG,
            RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, _______, _______,      _______, _______, RGB_VAD, RGB_SAD, RGB_HUD, RGB_MOD,
                                       _______, SH_TG,   _______,      _______, SH_TG,   _______
-),
-
+)
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _BLAU, _ROT, _ADJUST);
+    state = update_tri_layer_state(state, _BLAU, _ROT, _ADJUST);
+    return state;
 }
 
  #ifdef OLED_ENABLE
@@ -94,6 +103,9 @@ static void render_status(void) {
             break;
         case _ADJUST:
             oled_write_P(PSTR("Adjust\n"), false);
+            break;
+        case _COLEMAK:
+            oled_write_P(PSTR("Colemak Mod-DH"), false);
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
