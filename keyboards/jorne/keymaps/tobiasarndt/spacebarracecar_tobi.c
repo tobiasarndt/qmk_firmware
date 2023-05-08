@@ -160,7 +160,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       rshift = true;
     } else {
       if (timer_elapsed(rshift_timer) < TAPPING_TERM && rshiftp && !game) {
-        unregister_code(KC_RSFT);
+        unregister_code(KC_LSFT);
         register_code(KC_SPC);
         unregister_code(KC_SPC);
       }
@@ -214,6 +214,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     SHIFT_NO(DE_QUOT, DE_DQUO)
   case CU_HASH:
     SHIFT_NO(DE_HASH, DE_TILD)
+  case CU_TAB:
+    SHIFT_NO(KC_TAB, KC_ESC)
   case INC_SCR: 
     if(record->event.pressed) {
       uprintf("INC_SCR: ");

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "quantum.h"
-#include "keymap_german.h"
+#include "keymap_german_mac_iso.h"
 
 enum userspace_layers {
   _DEADKEY = 14,            // Change if more than 16 layers are required
@@ -51,6 +51,7 @@ enum userspace_custom_keycodes {
   // CU_DDQ,                   // "
   // CU_ED,                    // Escape deadkey layer
   CU_HASH,
+  CU_TAB,
   #endif
 
   #ifdef RGBLIGHT_ENABLE
