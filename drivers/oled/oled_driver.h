@@ -383,7 +383,6 @@ void oled_write(const char *data, bool invert);
 // Advances the cursor to the next page, wiring ' ' to the remainder of the current page
 void oled_write_ln(const char *data, bool invert);
 
-
 void oled_write_index(const uint16_t data, bool invert);
 
 // Writes a string to the buffer at current cursor position

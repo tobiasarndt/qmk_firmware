@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "hid_display.h"
-#include "jorne.h"
 #include "print.h"
 
 // Add headers for raw hid communication
