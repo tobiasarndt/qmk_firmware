@@ -40,12 +40,22 @@ enum custom_keycodes {
 #define QWERTY TG(_QWERTY)
 #define GAMING TG(_GAMING)
 
+// Meta key dependent on mac
+#ifdef MAC
+    #define META KC_LGUI
+    #define ELSE KC_LALT
+#endif
+#ifndef MAC
+    #define META KC_LALT
+    #define ELSE KC_LGUI
+#endif
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_COLEMAK] = LAYOUT(
   KC_LGUI, DE_CIRC, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,         KC_J,    KC_L,    KC_U,    KC_Y,    CU_LBR,  CU_RBR,  RGUI_T(KC_RBRC),
            KC_LCTL, KC_A,    KC_S,    KC_R,    KC_T,    KC_G,         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CU_SLSH,
-           KC_LALT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,         KC_K,    KC_H,    DE_COMM, DE_DOT,  DE_MINS, CU_EQL,
+           META,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,         KC_K,    KC_H,    DE_COMM, DE_DOT,  DE_MINS, CU_EQL,
                                       TAB_NUM, BSP_UML, CU_LSFT,      DEL_NUM, CU_RSFT, ESC_UML
 ),
 
@@ -74,12 +84,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_BLAU] = LAYOUT(
   _______, KC_ESC,  DE_AT,   CU_QUOT, DE_ACUT, _______, _______,      _______, _______, DE_UDIA, _______, DE_LCBR, DE_RCBR,  F12_RGU,
            PLS_LCT, DE_ADIA, DE_SS,   _______, KC_LEFT, KC_UP,        KC_DOWN, KC_RGHT, _______, _______, DE_ODIA, DE_BSLS,
-           EQL_LAL, _______, _______, KC_MPLY, KC_MPRV, KC_VOLD,      KC_VOLU, KC_MNXT, DE_LABK, DE_RABK, KC_PSLS, KC_PAST,
+           EQL_LAL, CU_PIPE 	, _______, KC_MPLY, KC_MPRV, KC_VOLD,      KC_VOLU, KC_MNXT, DE_LABK, DE_RABK, KC_PSLS, KC_PAST,
                                       _______, _______, _______,      _______, _______, _______
 ),
 
 [_ROT] = LAYOUT(
-  _______, KC_LGUI, KC_1,    KC_2,    CU_3,    KC_4,    KC_5,         KC_6,    CU_7,    CU_8,    CU_9,    CU_0,    _______, KC_CAPS, 
+  _______, ELSE,    KC_1,    KC_2,    CU_3,    KC_4,    KC_5,         KC_6,    CU_7,    CU_8,    CU_9,    CU_0,    _______, KC_CAPS, 
            EQL_LCT, KC_4,    KC_5,    KC_6,    KC_HOME, KC_PGUP,      KC_PGDN, KC_END,  _______, _______, KC_INS,  APP_RCT,
            _______, KC_7,    KC_8,    KC_9,    KC_0,    DEC_SCR,      INC_SCR, _______, _______, _______, _______, CU_HASH, 
                                       _______, _______, _______,      _______, _______, _______

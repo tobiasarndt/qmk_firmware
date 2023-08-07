@@ -27,8 +27,10 @@ LINK_TIME_OPTIMIZATION_ENABLE = yes
 DEFAULT_FOLDER = jorne/rev1
 
 GERMAN_ENABLE = yes
+MAC = no
 
-OPT_DEFS += -DGERMAN_ENABLE             \
+OPT_DEFS += -DGERMAN_ENABLE   \
+#            -DMAC             \
 
 
 

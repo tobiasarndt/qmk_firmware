@@ -216,6 +216,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     SHIFT_NO(DE_HASH, DE_TILD)
   case CU_TAB:
     SHIFT_NO(KC_TAB, KC_ESC)
+  case CU_PIPE:
+    SHIFT_NO(DE_PIPE, DE_TILD)
   case INC_SCR: 
     if(record->event.pressed) {
       uprintf("INC_SCR: ");
