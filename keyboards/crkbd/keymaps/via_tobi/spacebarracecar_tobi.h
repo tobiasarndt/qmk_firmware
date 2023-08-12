@@ -55,9 +55,9 @@ enum userspace_custom_keycodes {
   // CU_UE,                    // Ü
   // CU_SS,                    // ß
   // CU_DDQ,                   // "
-  CU_PIPE,                     // | | ~
-  CU_HASH,                     // # | ~
-  CU_TAB,                      // TAB | ESC
+  CU_PIPE,
+  CU_HASH,
+  CU_TAB,
   #endif
 
   #ifdef RGBLIGHT_ENABLE
