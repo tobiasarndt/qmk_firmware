@@ -10,8 +10,8 @@ enum layers {
     _COLEMAK = 0,
     _QWERTY = 1,
     _GAMING = 2,
-    _BLAU,
-    _ROT,
+    _SYM,
+    _NUM,
     _ADJUST
 };
 
@@ -32,24 +32,22 @@ enum custom_keycodes {
 //#define BSL_RAL MT(MOD_RALT, KC_BSLS)
 #define BSP_LSH MT(MOD_LSFT, KC_BSPC)
 #define SPC_RSH MT(MOD_RSFT, KC_SPC)
-#define DEL_NUM LT(_ROT, KC_DEL)
-#define TAB_NUM LT(_ROT, KC_TAB)
-#define ENT_LWR LT(_LOWER, KC_ENT)
-#define ESC_UML LT(_BLAU, KC_ESC)
-
-#define BSP_UML LT(_BLAU, KC_BSPC)
+#define DEL_NUM LT(_NUM, KC_DEL)
+#define TAB_NUM LT(_NUM, KC_TAB)
+#define ESC_UML LT(_SYM, KC_ESC)
+#define BSP_UML LT(_SYM, KC_BSPC)
 #define QWERTY TG(_QWERTY)
 #define GAMING TG(_GAMING)
 
 // Left-hand home row mods
 #define HOME_A MT(MOD_LGUI, KC_A)
 #define HOME_S MT(MOD_LALT, KC_S)
-#define HOME_R MT(MOD_RSFT, KC_R)
-#define HOME_T MT(MOD_LCTL, KC_T)
+#define HOME_R MT(MOD_LCTL, KC_R)
+#define HOME_T MT(MOD_RSFT, KC_T)
 
 // Right-hand home row mods
-#define HOME_N MT(MOD_RCTL, KC_N)
-#define HOME_E MT(MOD_RSFT, KC_E)
+#define HOME_N MT(MOD_RSFT, KC_N)
+#define HOME_E MT(MOD_RCTL, KC_E)
 #define HOME_I MT(MOD_LALT, KC_I)
 #define HOME_O MT(MOD_RGUI, KC_O)
 
@@ -80,7 +78,7 @@ const uint16_t PROGMEM fp_combo[] = {KC_F, KC_P, COMBO_END};
 const uint16_t PROGMEM rt_combo[] = {HOME_R, HOME_T, COMBO_END};
 const uint16_t PROGMEM cd_combo[] = {KC_C, KC_D, COMBO_END};
 const uint16_t PROGMEM lu_combo[] = {KC_L, KC_U, COMBO_END};
-const uint16_t PROGMEM ne_combo[] = {KC_N, KC_E, COMBO_END};
+const uint16_t PROGMEM ne_combo[] = {HOME_N, HOME_E, COMBO_END};
 const uint16_t PROGMEM hcomm_combo[] = {KC_H, DE_COMM, COMBO_END};
 const uint16_t PROGMEM dotmins_combo[] = {DE_DOT, DE_MINS, COMBO_END};
 
@@ -114,7 +112,7 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_COLEMAK] = LAYOUT(
-  KC_LGUI, DE_CIRC, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,         KC_J,    KC_L,    KC_U,    KC_Y,    CU_LBR,  CU_RBR,  RGUI_T(KC_RBRC),
+  KC_LGUI, DE_CIRC, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,         KC_J,    KC_L,    KC_U,    KC_Y,    CU_SLSH,  CU_RBR,  RGUI_T(KC_RBRC),
            KC_LCTL, HOME_A,  HOME_S,  HOME_R,  HOME_T,  KC_G,         KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  CU_SLSH,
            META,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,         KC_K,    KC_H,    DE_COMM, DE_DOT,  DE_MINS, CU_EQL,
                                       TAB_NUM, BSP_UML, CU_LSFT,      DEL_NUM, CU_RSFT, ESC_UML
@@ -127,14 +125,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       TAB_NUM, BSP_UML, CU_LSFT,      DEL_NUM, CU_RSFT, ESC_UML
 ),
 
-/* 
-[_GAMING] = LAYOUT(
-  KC_ESC,  CU_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_F,         KC_J,    KC_L,    KC_U,    KC_Y,    CU_LBR,  CU_RBR,  RGUI_T(KC_RBRC),
-           KC_4,    KC_A,    KC_S,    KC_G,    KC_D,    KC_F,         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CU_SLSH,
-           CU_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,         KC_K,    KC_H,    DE_COMM, DE_DOT,  DE_MINS, GAMING,
-                                      KC_LALT, KC_SPC,  KC_1,         DEL_NUM, CU_RSFT, ESC_UML
-), */
-
 [_GAMING] = LAYOUT(
   KC_ESC,  CU_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,         KC_J,    KC_L,    KC_U,    KC_Y,    CU_LBR,  CU_RBR,  RGUI_T(KC_RBRC),
            KC_4,    KC_A,    KC_S,    KC_R,    KC_T,    KC_G,         KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    CU_SLSH,
@@ -142,17 +132,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       KC_LALT, KC_BSPC, KC_1,         BSP_UML, CU_RSFT, ESC_UML
 ),
 
-[_BLAU] = LAYOUT(
-  _______, KC_ESC,  DE_AT,   CU_QUOT, DE_ACUT, _______, _______,      _______, _______, DE_UDIA, _______, DE_LCBR, DE_RCBR,  F12_RGU,
-           PLS_LCT, DE_ADIA, DE_SS,   _______, KC_LEFT, KC_UP,        KC_DOWN, KC_RGHT, _______, _______, DE_ODIA, DE_BSLS,
-           EQL_LAL, CU_PIPE, _______, KC_MPLY, KC_MPRV, KC_VOLD,      KC_VOLU, KC_MNXT, DE_LABK, DE_RABK, KC_PSLS, KC_PAST,
+[_SYM] = LAYOUT(
+  _______, KC_ESC,  DE_AT,   CU_QUOT, DE_ACUT, DE_DLR,  DE_PERC,      DE_AMPR, _______, DE_UDIA, _______, DE_BSLS, DE_RCBR,  F12_RGU,
+           PLS_LCT, DE_ADIA, DE_SS,   _______, KC_LEFT, KC_UP,        KC_DOWN, KC_RGHT, _______, DE_HASH, DE_ODIA, DE_BSLS,
+           EQL_LAL, CU_PIPE, DE_TILD, DE_CIRC, _______, _______,      _______, _______, DE_LABK, DE_RABK, KC_PSLS, KC_PAST,
                                       _______, _______, _______,      _______, _______, _______
 ),
 
-[_ROT] = LAYOUT(
-  _______, ELSE,    KC_1,    KC_2,    CU_3,    KC_4,    KC_5,         KC_6,    CU_7,    CU_8,    CU_9,    CU_0,    _______, KC_CAPS, 
-           EQL_LCT, KC_4,    KC_5,    KC_6,    KC_HOME, KC_PGUP,      KC_PGDN, KC_END,  _______, _______, KC_INS,  APP_RCT,
-           _______, KC_7,    KC_8,    KC_9,    KC_0,    DEC_SCR,      INC_SCR, _______, _______, _______, _______, CU_HASH, 
+[_NUM] = LAYOUT(
+  _______, ELSE,    KC_1,    KC_2,    CU_3,    _______, _______,      DE_EQL,  DE_PLUS, DE_MINS, DE_ASTR, _______, _______, KC_CAPS,
+           EQL_LCT, KC_4,    KC_5,    KC_6,    KC_HOME, KC_PGUP,      KC_PGDN, KC_END,  _______, _______, _______, APP_RCT,
+           _______, KC_7,    KC_8,    KC_9,    KC_0,    DEC_SCR,      INC_SCR, _______, _______, _______, CU_HASH, _______,
                                       _______, _______, _______,      _______, _______, _______
 ),
 
@@ -165,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    state = update_tri_layer_state(state, _BLAU, _ROT, _ADJUST);
+    state = update_tri_layer_state(state, _NUM, _SYM, _ADJUST);
     return state;
 }
 
@@ -183,10 +173,10 @@ static void render_status(void) {
         case _QWERTY:
             oled_write_P(PSTR("QUERTY\n"), false);
             break;
-        case _BLAU:
+        case _SYM:
             oled_write_P(PSTR("Umlaute und\nNavigation"), false);
             break;
-        case _ROT:
+        case _NUM:
             oled_write_P(PSTR("Zahlen\n"), false);
             break;
         case _ADJUST:
